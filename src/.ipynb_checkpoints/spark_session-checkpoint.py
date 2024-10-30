@@ -13,9 +13,9 @@ def get_spark_session(app_name: str) -> SparkSession:
         .appName(app_name) \
         .master("spark://spark-master:7077") \
         .config("spark.eventLog.enabled", "true") \
-        .config("spark.eventLog.dir", "/opt/spark/spark-events") \
-        .config("spark.default.input.path", "/home/spark/work/data/input") \
-        .config("spark.default.output.path", "/home/spark/work/data/output") \
+        .config("spark.eventLog.dir", "file:///opt/spark/work-dir/spark-events") \
+        .config("spark.default.output.path", "/opt/spark/work-dir/data/output") \
+        .config("spark.default.input.path", "/opt/spark/work-dir/data/input") \
         .getOrCreate()
 
 

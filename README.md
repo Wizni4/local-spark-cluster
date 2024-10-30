@@ -11,7 +11,6 @@ It offers a containerized Spark environment that allows users to run small Spark
 
 ```bash
 local-spark-cluster/
- ├── docker-compose.yml   # Docker Compose configuration
  ├── src/                 # Source code for Python scripts
  │ ├── init.py 
  │ ├── spark_session.py   # Script to initialize Spark session
@@ -25,16 +24,53 @@ local-spark-cluster/
  ├── .gitignore
  ├── docker-compose.yaml  # Docker configuration
  ├── README.md            # Project documentation
- ├── spark_cluster.bat    # Batch script to manage spark cluster
  └── spark_cluster.sh     # Bash script to manage spark cluster
 ```
 
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 - **[Docker](https://docs.docker.com/get-docker/)** and **[Docker Compose](https://docs.docker.com/compose/install/)** installed on your machine.
 - Basic understanding of **[Apache Spark](https://spark.apache.org/)** and **[Python](https://www.python.org/)**.
+
+## Using the [spark_cluster.sh](spark_cluster.sh) Script
+
+The spark_cluster.sh script provides various commands to manage the Spark cluster. 
+
+Here after the available actions:
+
+- `deploy`: Starts the Spark cluster. 
+    - `--no-jupyter` disable Jupyter notebook deployment
+    - `--scale=<number>` set the number of worker. *Default to 1*
+    - `--mem=<memory>` set the memory per worker. *Default to 1*
+    - `--cores=<cores>` set the number of cores per worker. *Default to 1*
+
+    *Example:*
+    ```bash
+    ./spark_cluster.sh deploy --no-jupyter --scale=2 --mem=3 --cores=2
+    ```
+
+- `stop`: Stops all running containers in the Spark cluster.
+
+    *Example:*
+    ```bash
+    ./spark_cluster.sh stop
+    ```
+
+- `status`: Displays the status of the Spark cluster, showing which containers are running.
+
+    *Example:*
+    ```bash
+    ./spark_cluster.sh status
+    ```
+
+- `run <script>`: Executes a specified PySpark script.
+
+    *Example:*
+    ```bash
+    ./spark_cluster.sh run script1.py
+    ```
+
+## How To Use It
 
 ### **Launching the Spark Cluster**
 
@@ -50,42 +86,16 @@ cd path/to/your_local_repository
 
 #### 2. **Start Docker containers:**
 
-You can start the Docker containers using either the Docker Compose command or the provided deployment scripts:
+You can start the Docker containers using the provided deployment scripts:
 
-##### 1. Using deployment scripts:
-
-*Linux/Mac:*
 ```bash
 ./spark_cluster.sh deploy
 ```
-*Windows:*
-```batch
-.\spark_cluster.bat deploy
-```
-
-##### 2. Using docker compose:
-
-   ```bash
-   docker compose up -d
-   ```
 
 #### 3. **Check the status of your containers:**
 
-##### 1. Using deployment scripts:
-
-*Linux/Mac:*
 ```bash
 ./spark_cluster.sh status
-```
-*Windows:*
-```batch
-.\spark_cluster.bat status
-```
-
-##### 1. Using docker compose:
-
-```bash
-docker compose ps
 ```
 
 ---
@@ -196,48 +206,27 @@ This template includes the basic setup for initializing a Spark session, reading
 
 ## **Executing Python Scripts**
 
-You can run your spark scripts using either the Docker Compose command or the provided deployment scripts:
+You can run your spark scripts using the provided deployment scripts:
 
-### 1. Using Deployment Scripts
-
-*Linux/Mac:*
 ```bash
 ./spark_cluster.sh run <script1.py>
 ```
-*Windows:*
-```batch
-.\spark_cluster.bat run <script1.py>
-```
 
 ---
 
 *⚠️ Make sure to replace `script1.py` with the name of your script.*
 
----
-
-### 2. Using Docker Compose
-
-#### 1. **Access the Spark Master Container:**
-
-```bash
- docker exec -it spark-cluster-spark-master-1 /bin/bash
-```
-
-#### 2. **Run your python script:**
-
-Use `spark-submit` to execute your script:
-
-``` bash
-spark-submit /src/scripts/script1.py
-```
+*Scripts are located in the `/home/spark/src/scripts/` directory within the container*
 
 ---
 
-*⚠️ Make sure to replace `script1.py` with the name of your script.*
+## Using Jupyter Notebook
 
-*Scripts are located in the `/src/scripts/` directory within the container*
+By default, Jupyter will be enabled. To disable Jupyter Notebook you should use the --no-jupyter flag when deploying the cluster.
 
----
+After starting the cluster, you can access Jupyter Notebook by navigating to: http://localhost:8888
+
+![](jupyter-notebook.gif)
 
 
 ## **Spark Interfaces**
@@ -265,26 +254,11 @@ This interface allows you to review the details of past Spark jobs, including ex
 
 When you are finished using the Spark cluster, you can stop all running containers.
 
-You can stop hte PSark Cluster using either the Docker Compose command or the provided deployment scripts:
+You can stop hte PSark Cluster using either the provided deployment scripts:
 
-### 1. Using Deployment Scripts
-
-*Linux/Mac:*
 ```bash
 ./spark_cluster.sh stop
 ```
-*Windows:*
-```batch
-.\spark_cluster.bat stop
-```
-
-### 2. Using Docker Compose
-
-```bash
- docker compose down
-```
-
-These command will stop and remove the containers defined in the docker-compose.yaml.
 
 ## **Conclusion**
 
