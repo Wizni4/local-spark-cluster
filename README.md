@@ -1,10 +1,16 @@
 # Local Spark Cluster Repository
 
-## Purpose
+Have you ever wanted to run Spark scripts locally to quickly test if your code works before using a cloud platform?​
 
-This repository contains a Docker-based setup for a Spark cluster to run Pyspark scripts.
+This local Spark cluster setup is designed specifically for that purpose – giving you the ability to run and test your Spark scripts right on your own machine.​
 
-It offers a containerized Spark environment that allows users to run small Spark scripts locally for testing and verification purposes.
+## Purpose:​
+
+- **Test small Spark scripts quickly**: Run code to verify functionality
+
+- **Local Spark environment**: Use when platforms like Databricks or AWS EMR are unavailable or unnecessary.
+
+- **Training and learning**: Provides a simple setup for practicing and learning Spark.​​
 
 
 ## Repository Structure
@@ -34,9 +40,7 @@ local-spark-cluster/
 
 ## Using the [spark_cluster.sh](spark_cluster.sh) Script
 
-The spark_cluster.sh script provides various commands to manage the Spark cluster. 
-
-Here after the available actions:
+The [spark_cluster.sh](./spark_cluster.sh) script provides following commands to manage the Spark cluster. 
 
 - `deploy`: Starts the Spark cluster. 
     - `--no-jupyter` disable Jupyter notebook deployment
@@ -56,7 +60,7 @@ Here after the available actions:
     ./spark_cluster.sh stop
     ```
 
-- `status`: Displays the status of the Spark cluster, showing which containers are running.
+- `status`: Displays the status of the Spark cluster.
 
     *Example:*
     ```bash
@@ -91,6 +95,8 @@ You can start the Docker containers using the provided deployment scripts:
 ```bash
 ./spark_cluster.sh deploy
 ```
+
+For more deployment options, see the [spark_cluster.sh usage section](#using-the-spark_clustersh-script).
 
 #### 3. **Check the status of your containers:**
 
@@ -148,7 +154,7 @@ spark_session = get_spark_session("YourSparkApplicationName")
 
 #### 3. **Input Data**
 
-Place your input files in [./data/input/YourSparkApplicationName](./data/input).
+Place your input files in [./data/input/](./data/input).
 
 To use your inputs, utilize the `read_dataframe` function, which extends the Spark DataFrame functionality:
 - This function read files from the [data/input](./data/input/) folder 
@@ -165,17 +171,11 @@ Example:
 ```python
 # Example usage of read_dataframe function
 df = spark_session.read_dataframe(
-    "YourSparkApplicationName/data.csv",  # Specify the input file with its path
+    "data.csv",                           # Specify the input file with its path
     header=True,                          # Example of a Spark read option
     inferSchema=True,                     # Another Spark read option
 )
 ```
-
----
-
-*⚠️ Replace `YourSparkApplicationName` with the name you used when initializing the Spark session.*
-
----
 
 #### 2. **Writing your Spark logic**
 
@@ -184,7 +184,7 @@ After initializing the Spark session, you can write your Spark logic as needed, 
 #### 3. **Writing output data**
 
 To write your DataFrame output, use the `write_dataframe` function, which extends the Spark DataFrame functionality:
-- The output will be saved to [./data/output/YourSparkApplicationName](./data/input):
+- The output will be saved to [./data/output/](./data/input):
 
 
 You can write the output in fthe following format:
@@ -222,12 +222,15 @@ You can run your spark scripts using the provided deployment scripts:
 
 ## Using Jupyter Notebook
 
-By default, Jupyter will be enabled. To disable Jupyter Notebook you should use the --no-jupyter flag when deploying the cluster.
+By default, Jupyter will be enabled.
+
+To disable Jupyter Notebook you should use the `--no-jupyter` flag when deploying the cluster. see [spark_cluster.sh usage section](#using-the-spark_clustersh-script)
 
 After starting the cluster, you can access Jupyter Notebook by navigating to: http://localhost:8888
 
 ![](jupyter-notebook.gif)
 
+A template is available at [./src/scripts/notebook_template.ipynb](./src/scripts/notebook_template.ipynb)
 
 ## **Spark Interfaces**
 
@@ -254,7 +257,7 @@ This interface allows you to review the details of past Spark jobs, including ex
 
 When you are finished using the Spark cluster, you can stop all running containers.
 
-You can stop hte PSark Cluster using either the provided deployment scripts:
+You can stop the Spark Cluster using the provided deployment scripts:
 
 ```bash
 ./spark_cluster.sh stop

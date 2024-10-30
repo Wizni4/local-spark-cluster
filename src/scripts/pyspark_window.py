@@ -43,3 +43,5 @@ df.show()
 
 # Store output
 df.write_dataframe(format="parquet")
+
+spark_session.stop()
