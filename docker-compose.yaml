@@ -16,9 +16,12 @@ services:
       - ./data/input:/home/spark/work/data/input
       - spark-events:/opt/spark/spark-events
     command: ["/bin/bash", "-c", "spark-class org.apache.spark.deploy.master.Master & spark-class org.apache.spark.deploy.history.HistoryServer"]
+    depends_on:
+      - spark-worker
 
   spark-worker:
     image: bitnami/spark:3.5.0
+    restart: always
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -30,7 +33,7 @@ services:
 
   jupyter:
     user: root
-    image: jupyter/pyspark-notebook:latest
+    image: jupyter/pyspark-notebook:x86_64-spark-3.5.0
     environment:
       - SPARK_MASTER=spark://spark-master:7077
       - NB_USER=spark

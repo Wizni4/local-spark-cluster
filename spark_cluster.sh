@@ -33,7 +33,7 @@ command="$1"
 shift
 
 # Parse options
-while [ ! -z "$1" ]; do
+while [[ ! -z "$1" && "$1" == --* ]]; do
     case "$1" in
         --no-jupyter)
             JUPYTER_ENABLED=false
@@ -71,7 +71,7 @@ function deploy() {
     # Add env variables
     export SPARK_WORKER_MEMORY
     export SPARK_WORKER_CORES
-    
+
     # Set WITH_JUPYTER based on JUPYTER_ENABLED
     if [ "$JUPYTER_ENABLED" = true ]; then
         echo "Jupyter notebook will be enabled."
@@ -115,7 +115,7 @@ function run() {
     fi
 
     fileName="$1"
-    filePath="./src/$fileName"
+    filePath="//home/spark/work/src/scripts/$fileName"
 
     echo "Running Spark job from file: $fileName"
     docker exec -it spark-cluster-spark-master-1 spark-submit "$filePath"
