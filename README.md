@@ -263,7 +263,7 @@ You can stop the Spark Cluster using the provided deployment scripts:
 
 You can access Jupyter Notebook by navigating to: [http://localhost:8888](http://localhost:8888).
 
-![](jupyter-notebook.gif)
+![jupyter-notebook](https://github.com/user-attachments/assets/9b8be047-b113-46e2-ad33-d1de83f49a11)
 
 ---
 
@@ -274,7 +274,7 @@ You can access Jupyter Notebook by navigating to: [http://localhost:8888](http:/
 ### 2. Accessing the Spark UI
 You can access the Spark Master web UI to monitor your cluster and jobs by navigating to: [http://localhost:8080](http://localhost:8080).
 
-![](spark-ui.jpg)
+![spark-ui](https://github.com/user-attachments/assets/27b249f9-269f-4c54-8ee9-81237018a9a1)
 
 This UI provides an overview of the Spark cluster, including the status of jobs, executors, and other resources.
 
@@ -285,7 +285,7 @@ This UI provides an overview of the Spark cluster, including the status of jobs,
 ### 3. Accessing Spark History Server
 To view the history of completed Spark applications, you can access the Spark History Server at: [http://localhost:18080](http://localhost:18080).
 
-![](./spark-server-history.gif)
+![spark-server-history](https://github.com/user-attachments/assets/0371b7ec-2845-44d5-a33b-6209877f5ab9)
 
 This interface allows you to review the details of past Spark jobs, including execution times and resource usage.
 
