@@ -33,7 +33,7 @@ def do_exercice(df: DataFrame) -> DataFrame:
 spark_session = get_spark_session("PysparkWindow")
 
 # Get inputs
-df: DataFrame = spark_session.read_dataframe("PysparkWindow/data.csv", header=True, inferSchema=True)
+df: DataFrame = spark_session.read_dataframe("data.csv", header=True, inferSchema=True)
 
 # Apply exercice
 df = do_exercice(df)
