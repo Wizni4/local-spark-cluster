@@ -4,7 +4,31 @@ Have you ever wanted to run Spark scripts locally to quickly test if your code w
 
 This local Spark cluster setup is designed specifically for that purpose – giving you the ability to run and test your Spark scripts right on your own machine.​
 
-## Purpose:​
+## Table of contents
+
+1. [Purpose](#1-purpose)
+2. [Repository Structure](#2-repository-structure)
+3. [Prerequisites](#3-prerequisites)
+4. [How to use it ?](#4-how-to-use-it)
+    - 4.1 [Launching the Spark Cluster](#1-launching-the-spark-cluster)
+        - 4.1.1 [Navigate to the root directory of the repository](#1-navigate-to-the-root-directory-of-the-repository)
+        - 4.1.2 [Start Docker containers](#2-start-docker-containers)
+        - 4.1.3 [Check the status of the containers](#3-check-the-status-of-the-containers)
+    - 4.2 [Creating PySpark Scripts](#2-creating-pyspark-scripts)
+        - 4.2.1 [Importing the Spark Session](#1-importing-the-spark-session)
+        - 4.2.2 [Using input Data](#2-using-input-data)
+        - 4.2.3 [Writing your Spark logic](#3-writing-your-spark-logic)
+        - 4.2.4 [Writing output data](#4-writing-output-data)
+        - 4.2.5 [Script Template](#5-script-template)
+    - 4.3 [Executing Python Scripts](#3-executing-python-scripts)
+    - 4.4 [Stopping the Spark Cluster](#4-stopping-the-spark-cluster)
+5. [Interfaces](#5-interfaces)
+    - 5.1 [Accessing Jupyter Notebook](#1-accessing-jupyter-notebook)
+    - 5.2 [Accessing Spark UI](#2-accessing-the-spark-ui)
+    - 5.3 [Accessing Spark History Server](#3-accessing-spark-history-server)
+6. [Conclusion](#10-conclusion)
+
+## 1. Purpose:​
 
 - **Test small Spark scripts quickly**: Run code to verify functionality
 
@@ -12,8 +36,7 @@ This local Spark cluster setup is designed specifically for that purpose – giv
 
 - **Training and learning**: Provides a simple setup for practicing and learning Spark.​​
 
-
-## Repository Structure
+## 2. Repository Structure
 
 ```bash
 local-spark-cluster/
@@ -22,23 +45,25 @@ local-spark-cluster/
  │ ├── spark_session.py   # Script to initialize Spark session
  │ └── scripts/           # Directory for user scripts 
  │  ├── init.py 
- │  ├── script1.py        # Example Python script 1 
- │  └── script2.py        # Example Python script 2 
- ├── data/                # Output data storage 
- │  └── input/
- │  └── output/
+ │  ├── script1.py        # Example Python script 1
+ │  ├── script2.py        # Example Python script 2
+ │  ├── notebook1.ipynb   # Example Notebook 1
+ │  └── notebook2.ipynb   # Example Notebook 2
+ ├── data/
+ │  └── input/            # Input data storage 
+ │  └── output/           # Output data storage 
  ├── .gitignore
  ├── docker-compose.yaml  # Docker configuration
  ├── README.md            # Project documentation
  └── spark_cluster.sh     # Bash script to manage spark cluster
 ```
 
-## Prerequisites
+## 3. Prerequisites
 
 - **[Docker](https://docs.docker.com/get-docker/)** and **[Docker Compose](https://docs.docker.com/compose/install/)** installed on your machine.
 - Basic understanding of **[Apache Spark](https://spark.apache.org/)** and **[Python](https://www.python.org/)**.
 
-## Using the [spark_cluster.sh](spark_cluster.sh) Script
+## 4. How To Use It
 
 The [spark_cluster.sh](./spark_cluster.sh) script provides following commands to manage the Spark cluster. 
 
@@ -51,13 +76,6 @@ The [spark_cluster.sh](./spark_cluster.sh) script provides following commands to
     *Example:*
     ```bash
     ./spark_cluster.sh deploy --no-jupyter --scale=2 --mem=3 --cores=2
-    ```
-
-- `stop`: Stops all running containers in the Spark cluster.
-
-    *Example:*
-    ```bash
-    ./spark_cluster.sh stop
     ```
 
 - `status`: Displays the status of the Spark cluster.
@@ -74,11 +92,16 @@ The [spark_cluster.sh](./spark_cluster.sh) script provides following commands to
     ./spark_cluster.sh run script1.py
     ```
 
-## How To Use It
+- `stop`: Stops all running containers in the Spark cluster.
 
-### **Launching the Spark Cluster**
+    *Example:*
+    ```bash
+    ./spark_cluster.sh stop
+    ```
 
-#### 1. **Navigate to the root directory of the repository**:
+### 1. Launching the Spark Cluster
+
+#### 1. Navigate to the root directory of the repository:
 
 ```bash
 cd path/to/your_local_repository
@@ -88,7 +111,7 @@ cd path/to/your_local_repository
 
 *⚠️ Make sure to replace `path/to/your_local_repository` with your local repository path*
 
-#### 2. **Start Docker containers:**
+#### 2. Start Docker containers:
 
 You can start the Docker containers using the provided deployment scripts:
 
@@ -96,9 +119,11 @@ You can start the Docker containers using the provided deployment scripts:
 ./spark_cluster.sh deploy
 ```
 
-For more deployment options, see the [spark_cluster.sh usage section](#using-the-spark_clustersh-script).
+For more deployment options, see the [spark_cluster.sh usage section](#4-how-to-use-it).
 
-#### 3. **Check the status of your containers:**
+#### 3. Check the status of the containers:
+
+You can check containers status using the provided deployment scripts:
 
 ```bash
 ./spark_cluster.sh status
@@ -132,14 +157,14 @@ spark-cluster-spark-master_1      /opt/bitnami/scripts/  Exited         0.0.0.0:
 spark-cluster-spark-worker-1      /opt/bitnami/scripts/  Up                                    
 ```
 
-## **Creating PySpark Scripts**
+### 2. Creating PySpark Scripts
 
 You can create and run your own PySpark scripts by placing them in the [./src/scripts/](./src/scripts/) folder.
 
 To do so, follow the process outlined below.
 
 
-#### 1. **Importing the Spark Session:**
+#### 1. Importing the Spark Session:
 
 To initialize a Spark session, import the `get_spark_session` function from the `spark_session` module:
 - In the `get_spark_session` function, you need to provide a unique name for your Spark application.
@@ -152,20 +177,19 @@ from spark_session import get_spark_session
 spark_session = get_spark_session("YourSparkApplicationName")
 ```
 
-#### 3. **Input Data**
+#### 2. Using input Data
 
 Place your input files in [./data/input/](./data/input).
 
-To use your inputs, utilize the `read_dataframe` function, which extends the Spark DataFrame functionality:
+To read your DataFrame input, use the `read_dataframe` function, which extends the Spark DataFrame functionality:
 - This function read files from the [data/input](./data/input/) folder 
 - This function automatically determines the file format based on the file extension.
 - Additionally, you can pass various Spark read options through `**kwargs` to customize the reading process.
 
 Supported input file formats:
-
-- **CSV**
-- **Parquet**
-- **JSON**
+- `csv`
+- `parquet`
+- `json`
 
 Example:
 ```python
@@ -177,14 +201,14 @@ df = spark_session.read_dataframe(
 )
 ```
 
-#### 2. **Writing your Spark logic**
+#### 3. Writing your Spark logic
 
 After initializing the Spark session, you can write your Spark logic as needed, such as reading data, performing transformations, analyzing datasets etc...
 
-#### 3. **Writing output data**
+#### 4. Writing output data
 
 To write your DataFrame output, use the `write_dataframe` function, which extends the Spark DataFrame functionality:
-- The output will be saved to [./data/output/](./data/input):
+- The output will be saved to [./data/output/](./data/output):
 
 
 You can write the output in fthe following format:
@@ -198,13 +222,15 @@ You can write the output in fthe following format:
  df.write_dataframe(format="csv")
  ```
 
-#### 5. **Script Template**
+#### 5. Script Template
 
-If you're unsure how to structure your script, a template is available at [./src/scripts/script_template.py](./src/scripts/script_template.py)
+If you're unsure how to structure your script, templates are available at:
+- python script: [./src/scripts/script_template.py](./src/scripts/script_template.py)
+- jupyter notebook: [./src/scripts/notebook_template.ipynb](./src/scripts/notebook_template.ipynb)
 
-This template includes the basic setup for initializing a Spark session, reading input data, processing data and writing an output dataset.
+These templates includes the basic setup for initializing a Spark session, reading input data, processing data and writing an output dataset.
 
-## **Executing Python Scripts**
+### 3. Executing Python Scripts
 
 You can run your spark scripts using the provided deployment scripts:
 
@@ -220,40 +246,8 @@ You can run your spark scripts using the provided deployment scripts:
 
 ---
 
-## Using Jupyter Notebook
 
-By default, Jupyter will be enabled.
-
-To disable Jupyter Notebook you should use the `--no-jupyter` flag when deploying the cluster. see [spark_cluster.sh usage section](#using-the-spark_clustersh-script)
-
-After starting the cluster, you can access Jupyter Notebook by navigating to: http://localhost:8888
-
-![](jupyter-notebook.gif)
-
-A template is available at [./src/scripts/notebook_template.ipynb](./src/scripts/notebook_template.ipynb)
-
-## **Spark Interfaces**
-
-### **1. Accessing the Spark UI**
-You can access the Spark Master web UI to monitor your cluster and jobs by navigating to: [http://localhost:8080](http://localhost:8080).
-
-This UI provides an overview of the Spark cluster, including the status of jobs, executors, and other resources.
-
----
-
-*For more details, refer to the official documentation: [Spark Monitoring and Instrumentation](https://spark.apache.org/docs/latest/monitoring.html)*
-
-### **2. Accessing Spark History Server**
-To view the history of completed Spark applications, you can access the Spark History Server at: [http://localhost:18080](http://localhost:18080).
-
-This interface allows you to review the details of past Spark jobs, including execution times and resource usage.
-
----
-*For more details, refer to the official documentation: [Spark History Server](https://spark.apache.org/docs/latest/monitoring.html#viewing-after-the-fact)*
-
-
-
-## **Stopping the Spark Cluster**
+### 4. Stopping the Spark Cluster
 
 When you are finished using the Spark cluster, you can stop all running containers.
 
@@ -263,7 +257,42 @@ You can stop the Spark Cluster using the provided deployment scripts:
 ./spark_cluster.sh stop
 ```
 
-## **Conclusion**
+## 5. Interfaces
+
+### 1. Accessing Jupyter Notebook
+
+You can access Jupyter Notebook by navigating to: [http://localhost:8888](http://localhost:8888).
+
+![](jupyter-notebook.gif)
+
+---
+
+*By default, Jupyter will be enabled.*
+
+*To disable Jupyter Notebook you should use the `--no-jupyter` flag when deploying the cluster. see [spark_cluster.sh usage section](#4-how-to-use-it)*
+
+### 2. Accessing the Spark UI
+You can access the Spark Master web UI to monitor your cluster and jobs by navigating to: [http://localhost:8080](http://localhost:8080).
+
+![](spark-ui.jpg)
+
+This UI provides an overview of the Spark cluster, including the status of jobs, executors, and other resources.
+
+---
+
+*For more details, refer to the official documentation: [Spark Monitoring and Instrumentation](https://spark.apache.org/docs/latest/monitoring.html)*
+
+### 3. Accessing Spark History Server
+To view the history of completed Spark applications, you can access the Spark History Server at: [http://localhost:18080](http://localhost:18080).
+
+![](./spark-server-history.gif)
+
+This interface allows you to review the details of past Spark jobs, including execution times and resource usage.
+
+---
+*For more details, refer to the official documentation: [Spark History Server](https://spark.apache.org/docs/latest/monitoring.html#viewing-after-the-fact)*
+
+## 10. Conclusion
 
 This repository provides a Spark environment to run small PySpark scripts.
 
