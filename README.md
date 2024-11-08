@@ -138,7 +138,7 @@ You can start the Docker containers using the provided deployment scripts:
 ./spark_cluster.sh deploy
 ```
 
-For more deployment options, see the [spark_cluster.sh usage section](#4-how-to-use-it).
+For more deployment options, see the [spark_cluster.sh usage section](#5-how-to-use-it).
 
 #### 3. Check the status of the containers:
 
@@ -288,7 +288,7 @@ You can access Jupyter Notebook by navigating to: [http://localhost:8888](http:/
 
 *By default, Jupyter will be enabled.*
 
-*To disable Jupyter Notebook you should use the `--no-jupyter` flag when deploying the cluster. see [spark_cluster.sh usage section](#4-how-to-use-it)*
+*To disable Jupyter Notebook you should use the `--no-jupyter` flag when deploying the cluster. see [spark_cluster.sh usage section](#5-how-to-use-it)*
 
 ### 2. Accessing the Spark UI
 You can access the Spark Master web UI to monitor your cluster and jobs by navigating to: [http://localhost:8080](http://localhost:8080).
