@@ -185,7 +185,7 @@ To do so, follow the process outlined below.
 
 #### 1. Importing the Spark Session:
 
-To initialize a Spark session, import the `get_spark_session` function from the `spark_session` module:
+To initialize a Spark session, import the `get_spark_session` function from the [spark_session.py](./src/spark_session.py) module:
 - In the `get_spark_session` function, you need to provide a unique name for your Spark application.
 - This name will identify the application in the Spark UI and will also be used to define the input and output paths. 
 
@@ -200,7 +200,7 @@ spark_session = get_spark_session("YourSparkApplicationName")
 
 Place your input files in [./data/input/](./data/input).
 
-To read your DataFrame input, use the `read_dataframe` function, which extends the Spark DataFrame functionality:
+To read your DataFrame input, use the `read_dataframe` function defined in [spark_session.py](./src/spark_session.py) and which extends the Spark DataFrame functionality:
 - This function read files from the [data/input](./data/input/) folder 
 - This function automatically determines the file format based on the file extension.
 - Additionally, you can pass various Spark read options through `**kwargs` to customize the reading process.
@@ -226,7 +226,7 @@ After initializing the Spark session, you can write your Spark logic as needed, 
 
 #### 4. Writing output data
 
-To write your DataFrame output, use the `write_dataframe` function, which extends the Spark DataFrame functionality:
+To write your DataFrame output, use the `write_dataframe` function defined in [spark_session.py](./src/spark_session.py) and which extends the Spark DataFrame functionality:
 - The output will be saved to [./data/output/](./data/output):
 
 
