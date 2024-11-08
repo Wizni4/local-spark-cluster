@@ -9,24 +9,25 @@ This local Spark cluster setup is designed specifically for that purpose – giv
 1. [Purpose](#1-purpose)
 2. [Repository Structure](#2-repository-structure)
 3. [Prerequisites](#3-prerequisites)
-4. [How to use it ?](#4-how-to-use-it)
-    - 4.1 [Launching the Spark Cluster](#1-launching-the-spark-cluster)
-        - 4.1.1 [Navigate to the root directory of the repository](#1-navigate-to-the-root-directory-of-the-repository)
-        - 4.1.2 [Start Docker containers](#2-start-docker-containers)
-        - 4.1.3 [Check the status of the containers](#3-check-the-status-of-the-containers)
-    - 4.2 [Creating PySpark Scripts](#2-creating-pyspark-scripts)
-        - 4.2.1 [Importing the Spark Session](#1-importing-the-spark-session)
-        - 4.2.2 [Using input Data](#2-using-input-data)
-        - 4.2.3 [Writing your Spark logic](#3-writing-your-spark-logic)
-        - 4.2.4 [Writing output data](#4-writing-output-data)
-        - 4.2.5 [Script Template](#5-script-template)
-    - 4.3 [Executing Python Scripts](#3-executing-python-scripts)
-    - 4.4 [Stopping the Spark Cluster](#4-stopping-the-spark-cluster)
-5. [Interfaces](#5-interfaces)
-    - 5.1 [Accessing Jupyter Notebook](#1-accessing-jupyter-notebook)
-    - 5.2 [Accessing Spark UI](#2-accessing-the-spark-ui)
-    - 5.3 [Accessing Spark History Server](#3-accessing-spark-history-server)
-6. [Conclusion](#10-conclusion)
+4. [Cluster architecture](#4-cluster-architecture)
+5. [How to use it ?](#5-how-to-use-it)
+    - 5.1 [Launching the Spark Cluster](#1-launching-the-spark-cluster)
+        - 5.1.1 [Navigate to the root directory of the repository](#1-navigate-to-the-root-directory-of-the-repository)
+        - 5.1.2 [Start Docker containers](#2-start-docker-containers)
+        - 5.1.3 [Check the status of the containers](#3-check-the-status-of-the-containers)
+    - 5.2 [Creating PySpark Scripts](#2-creating-pyspark-scripts)
+        - 5.2.1 [Importing the Spark Session](#1-importing-the-spark-session)
+        - 5.2.2 [Using input Data](#2-using-input-data)
+        - 5.2.3 [Writing your Spark logic](#3-writing-your-spark-logic)
+        - 5.2.4 [Writing output data](#4-writing-output-data)
+        - 5.2.5 [Script Template](#5-script-template)
+    - 5.3 [Executing Python Scripts](#3-executing-python-scripts)
+    - 5.4 [Stopping the Spark Cluster](#4-stopping-the-spark-cluster)
+6. [Interfaces](#6-interfaces)
+    - 6.1 [Accessing Jupyter Notebook](#1-accessing-jupyter-notebook)
+    - 6.2 [Accessing Spark UI](#2-accessing-the-spark-ui)
+    - 6.3 [Accessing Spark History Server](#3-accessing-spark-history-server)
+7. [Conclusion](#7-conclusion)
 
 ## 1. Purpose:​
 
@@ -63,7 +64,25 @@ local-spark-cluster/
 - **[Docker](https://docs.docker.com/get-docker/)** and **[Docker Compose](https://docs.docker.com/compose/install/)** installed on your machine.
 - Basic understanding of **[Apache Spark](https://spark.apache.org/)** and **[Python](https://www.python.org/)**.
 
-## 4. How To Use It
+## 5. Cluster Architecture
+
+The cluster provides a master-worker architecture used in distributed computing with Apache Spark:
+
+- **Spark Master**: Central node responsible for managing resources and coordinating tasks across the cluster:
+
+    - Spark scripts can be executed directly via the terminal. see [Executing Python Scripts](#3-executing-python-scripts)
+    - Provides interfaces to monitor and manage the cluster. see [Accessing Spark UI](#2-accessing-the-spark-ui) and [Accessing Spark History Server](#3-accessing-spark-history-server)
+
+- **Spark Worker(s)**: Perform the actual data processing:
+
+    - The number of workers can be specified during deployment. see [Start Docker containers](#2-start-docker-containers)
+
+- **Jupyter Notebook**: Offers an interactive environment to write and run Spark code in Python, connected directly to the Spark cluster. [Accessing Jupyter Notebook](#1-accessing-jupyter-notebook)
+
+
+![architecture](https://github.com/user-attachments/assets/8f76e0cf-d370-4542-a4b9-c0acefc802d9)
+
+## 5. How To Use It
 
 The [spark_cluster.sh](./spark_cluster.sh) script provides following commands to manage the Spark cluster. 
 
@@ -257,7 +276,7 @@ You can stop the Spark Cluster using the provided deployment scripts:
 ./spark_cluster.sh stop
 ```
 
-## 5. Interfaces
+## 6. Interfaces
 
 ### 1. Accessing Jupyter Notebook
 
@@ -292,7 +311,7 @@ This interface allows you to review the details of past Spark jobs, including ex
 ---
 *For more details, refer to the official documentation: [Spark History Server](https://spark.apache.org/docs/latest/monitoring.html#viewing-after-the-fact)*
 
-## 10. Conclusion
+## 7. Conclusion
 
 This repository provides a Spark environment to run small PySpark scripts.
 
