@@ -42,6 +42,6 @@ df = do_exercice(df)
 df.show()
 
 # Store output
-df.write_dataframe(format="parquet")
+df.write_dataframe(format="csv")
 
 spark_session.stop()
