@@ -323,7 +323,3 @@ For any questions or issues, please refer to the following resources:
 - [Bitnami Spark Docker Documentation](https://github.com/bitnami/bitnami-docker-spark)
 - [PySpark Documentation](https://spark.apache.org/docs/latest/api/python/)
 
----
-
-*For further assistance, feel free to contact me directly at [mathieu.masson@alten.com](mailto:mathieu.masson@alten.com).*
-
